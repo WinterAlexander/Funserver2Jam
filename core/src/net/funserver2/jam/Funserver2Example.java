@@ -32,7 +32,7 @@ public class Funserver2Example extends ApplicationAdapter
 
 	private Array<Rectangle> raindrops;
 
-	private long lastDropTime;
+	private long lastDropTime, delay;
 	
 	@Override
 	public void create()
@@ -58,7 +58,9 @@ public class Funserver2Example extends ApplicationAdapter
 		bucket.width = 64;
 		bucket.height = 64;
 
-		raindrops = new Array<Rectangle>();
+		delay = 1_000_000_000;
+
+		raindrops = new Array<>();
 		spawnRaindrop();
 	}
 
@@ -83,20 +85,30 @@ public class Funserver2Example extends ApplicationAdapter
 			bucket.x = touchPos.x - 64/2;
 		}
 
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			bucket.x -= 200 * Gdx.graphics.getDeltaTime();
+
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			bucket.x += 200 * Gdx.graphics.getDeltaTime();
 
 		if(bucket.x < 0) bucket.x = 0;
 
 		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 
-		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+		if(TimeUtils.nanoTime() - lastDropTime > delay)
+		{
+			spawnRaindrop();
+			delay *= 0.95;
+		}
 
 		Iterator<Rectangle> iter = raindrops.iterator();
-		while(iter.hasNext()){
+		while(iter.hasNext())
+		{
 			Rectangle raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if(raindrop.y + 64 < 0) iter.remove();
+			if(raindrop.y + 64 < 0)
+				iter.remove();
+
 			if(raindrop.overlaps(bucket))
 			{
 				dropSound.play();
