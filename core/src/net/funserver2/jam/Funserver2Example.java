@@ -18,8 +18,14 @@ public class Funserver2Example extends ApplicationAdapter
 	@Override
 	public void create()
 	{
-		dropImage = new Texture(Gdx.files.internal("droplet.png"));
+		dropImage = new Texture("droplet.png");
+		bucketImage = new Texture("bucket.png");
 
+		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+
+		rainMusic.setLooping(true);
+		rainMusic.play();
 	}
 
 	@Override
