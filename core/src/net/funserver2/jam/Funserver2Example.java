@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -55,6 +56,9 @@ public class Funserver2Example extends ApplicationAdapter
 		bucket.x = 800 / 2 - 64 / 2;
 		bucket.y = 20;
 
+		Sprite sprite = new Sprite();
+
+
 		bucket.width = 64;
 		bucket.height = 64;
 
@@ -78,7 +82,8 @@ public class Funserver2Example extends ApplicationAdapter
 			batch.draw(dropImage, raindrop.x, raindrop.y);
 		batch.end();
 
-		if(Gdx.input.isTouched()){
+		if(Gdx.input.isTouched())
+		{
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
@@ -91,14 +96,16 @@ public class Funserver2Example extends ApplicationAdapter
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 			bucket.x += 200 * Gdx.graphics.getDeltaTime();
 
-		if(bucket.x < 0) bucket.x = 0;
+		if(bucket.x < 0)
+			bucket.x = 0;
 
-		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+		if(bucket.x > 800 - 64)
+			bucket.x = 800 - 64;
 
 		if(TimeUtils.nanoTime() - lastDropTime > delay)
 		{
 			spawnRaindrop();
-			delay *= 0.95;
+			delay *= 0.98;
 		}
 
 		Iterator<Rectangle> iter = raindrops.iterator();
