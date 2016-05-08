@@ -10,9 +10,9 @@ public class DesktopLauncher
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.title = "Fun server2";
-		config.width = 1280;
-		config.height = 720;
+		config.title = "Drop";
+		config.width = 800;
+		config.height = 400;
 
 		new LwjglApplication(new Funserver2Example(), config);
 
